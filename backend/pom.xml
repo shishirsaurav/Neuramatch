@@ -28,6 +28,9 @@
         <!-- Spring -->
         <spring-cloud.version>2023.0.0</spring-cloud.version>
 
+        <!-- Lombok -->
+        <lombok.version>1.18.34</lombok.version>
+
         <!-- Database -->
         <postgresql.version>42.7.1</postgresql.version>
         <neo4j-driver.version>5.15.0</neo4j-driver.version>
@@ -41,6 +44,7 @@
 
     <modules>
         <module>neuramatch-common</module>
+        <module>neuramatch-user-service</module>
         <module>neuramatch-resume-service</module>
         <module>neuramatch-job-service</module>
         <module>neuramatch-matching-service</module>
@@ -78,7 +82,7 @@
         <!-- Spring Boot Starter Web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-webflux</artifactId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
         <!-- Spring Boot Actuator -->
@@ -91,6 +95,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
             <optional>true</optional>
         </dependency>
 
@@ -103,6 +108,24 @@
     </dependencies>
 
     <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.11.0</version>
+                    <configuration>
+                        <annotationProcessorPaths>
+                            <path>
+                                <groupId>org.projectlombok</groupId>
+                                <artifactId>lombok</artifactId>
+                                <version>${lombok.version}</version>
+                            </path>
+                        </annotationProcessorPaths>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

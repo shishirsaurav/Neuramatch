@@ -2,6 +2,12 @@ spring:
   application:
     name: neuramatch-matching-service
 
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.security.reactive.ReactiveUserDetailsServiceAutoConfiguration
+      - org.springframework.boot.autoconfigure.security.reactive.ReactiveSecurityAutoConfiguration
+      - org.springframework.boot.actuate.autoconfigure.security.reactive.ReactiveManagementWebSecurityAutoConfiguration
+
   datasource:
     url: jdbc:postgresql://${DB_HOST:localhost}:5432/neuramatch
     username: ${DB_USER:postgres}
@@ -47,3 +53,30 @@ logging:
   level:
     com.neuramatch: DEBUG
     org.springframework: INFO
+    org.springframework.data.neo4j: DEBUG
+    org.neo4j.driver: INFO
+
+# Custom properties
+matching:
+  skill:
+    synonym-resolution: true
+    alternative-matching: true
+    min-transferability: 0.75
+  cache:
+    ttl: 3600 # 1 hour in seconds
+
+# Gemini Configuration
+gemini:
+  api:
+    key: ${GEMINI_API_KEY:your-api-key-here}
+    timeout: 60 # seconds
+  embedding:
+    model: models/embedding-001
+    dimensions: 768
+    batch-size: 100
+  text:
+    model: gemini-pro
+  ratelimit:
+    requests-per-minute: 60
+  retry:
+    max-attempts: 3

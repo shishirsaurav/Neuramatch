@@ -134,6 +134,22 @@ services:
     depends_on:
       - prometheus
 
+  # NLP Service (Python/Flask)
+  nlp-service:
+    build:
+      context: ./nlp-service
+      dockerfile: Dockerfile
+    container_name: neuramatch-nlp-service
+    ports:
+      - "5001:5000"
+    networks:
+      - neuramatch-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
 volumes:
   postgres_data:
   neo4j_data:
