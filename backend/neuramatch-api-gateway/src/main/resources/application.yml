@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: neuramatch-api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: resume-service
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/v1/resumes/**
+        - id: job-service
+          uri: http://localhost:8082
+          predicates:
+            - Path=/api/v1/jobs/**
+        - id: matching-service
+          uri: http://localhost:8083
+          predicates:
+            - Path=/api/v1/match/**,/api/v1/skills/**
+
+server:
+  port: 8080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always

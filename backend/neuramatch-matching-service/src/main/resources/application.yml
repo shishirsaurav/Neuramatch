@@ -1,0 +1,49 @@
+spring:
+  application:
+    name: neuramatch-matching-service
+
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:5432/neuramatch
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+
+  neo4j:
+    uri: bolt://${NEO4J_HOST:localhost}:7687
+    authentication:
+      username: ${NEO4J_USER:neo4j}
+      password: ${NEO4J_PASSWORD:password}
+
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: 6379
+      timeout: 2000ms
+
+  kafka:
+    bootstrap-servers: ${KAFKA_BROKERS:localhost:9092}
+    consumer:
+      group-id: matching-service-group
+      auto-offset-reset: earliest
+
+server:
+  port: 8083
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  level:
+    com.neuramatch: DEBUG
+    org.springframework: INFO
